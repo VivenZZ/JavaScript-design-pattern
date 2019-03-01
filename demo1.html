@@ -7,6 +7,31 @@
   <title>单例模式</title>
 </head>
 <body>
-  
+  <script>
+    // 首先创建一个初始化的构造函数
+    var CreateDiv = function (html) {
+      this.html = html;
+      this.init();
+    }
+    CreateDiv.prototype.init = function () {
+      var div = document.createElement('div');
+      div.innerHTML = this.html;
+      document.body.appendChild(div);
+    }
+    // 依据单一职责原则 创建代理来实现单例
+    var ProxySingletonCreateDiv = (function () {
+      // 需要返回CreateDiv
+      var instance;
+      return function (html) {
+        if (!instance) {
+          instance = new CreateDiv(html);
+        }
+        return instance;
+      }
+    })();
+    var a = ProxySingletonCreateDiv('viven');
+    var b = ProxySingletonCreateDiv('kevin');
+    console.log(a===b); // true
+  </script>
 </body>
 </html>
